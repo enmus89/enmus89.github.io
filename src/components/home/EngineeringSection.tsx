@@ -1,11 +1,49 @@
 import Link from "next/link";
-import PlaceholderImage from "@/components/PlaceholderImage";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
-import { researchThemes } from "@/data/research";
+import { publications } from "@/data/publications";
+import { metrics } from "@/data/profile";
+import { cx } from "@/lib/utils";
+
+/**
+ * Publication-record teaser for the homepage, restructured after the
+ * "featured card + compact row list, grouped by area" pattern from the
+ * Athena academic-page template's Publications section — same grouping and
+ * featured/compact distinction, rebuilt with this site's own type system,
+ * spacing and single-accent-color palette rather than Athena's own styling.
+ * "Featured" here is simply the most recent paper in each area — an
+ * objective pick, not an editorial one.
+ */
+
+const TOP_AREAS = 3;
+const COMPACT_PER_AREA = 2;
+
+function buildGroups() {
+  const byCategory = new Map<string, typeof publications>();
+  for (const p of publications) {
+    const list = byCategory.get(p.category) ?? [];
+    list.push(p);
+    byCategory.set(p.category, list);
+  }
+
+  const areas = [...byCategory.entries()]
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, TOP_AREAS);
+
+  return areas.map(([category, papers]) => {
+    const sorted = [...papers].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+    return {
+      category,
+      count: papers.length,
+      featured: sorted[0],
+      compact: sorted.slice(1, 1 + COMPACT_PER_AREA),
+    };
+  });
+}
 
 export default function EngineeringSection() {
-  const shown = researchThemes.slice(0, 6);
+  const groups = buildGroups();
+  const citationLine = metrics.map((m) => `${m.value} ${m.label.toLowerCase()}`).join(" · ");
 
   return (
     <section className="mt-32 md:mt-44">
@@ -13,52 +51,74 @@ export default function EngineeringSection() {
         <Reveal>
           <SectionHeading
             index="02"
-            eyebrow="Engineering"
+            eyebrow="Research"
             title="Structures, materials & the evidence between them."
             lead="Research at the intersection of structural engineering, construction materials and sustainable construction — grounded in laboratory testing and statistical analysis."
           />
+          <p className="text-caption mt-4">{citationLine}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-14 items-start">
-          <div className="lg:col-span-5 order-2 lg:order-1">
-            <Reveal delay={0.05}>
-              <ol className="border-t border-line">
-                {shown.map((theme, i) => (
-                  <li
-                    key={theme.id}
-                    className="grid grid-cols-[2.5rem_1fr] gap-4 py-5 border-b border-line"
-                  >
-                    <span className="text-index pt-0.5">{String(i + 1).padStart(2, "0")}</span>
-                    <div>
-                      <p className="text-base font-medium">{theme.title}</p>
-                      <p className="text-sm text-charcoal mt-1 max-w-md">{theme.descriptor}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-              <Link
-                href="/research"
-                className="inline-flex items-center gap-2 text-eyebrow text-accent mt-8 group"
-              >
-                All research themes
-                <span className="transition-transform group-hover:translate-x-1">›</span>
-              </Link>
-            </Reveal>
-          </div>
+        <div className="mt-14 space-y-14">
+          {groups.map((group, gi) => (
+            <Reveal key={group.category} delay={Math.min(gi * 0.06, 0.2)}>
+              <div className="flex items-baseline justify-between gap-4 border-t border-line pt-5">
+                <p className="text-eyebrow">{group.category}</p>
+                <p className="text-caption">{group.count} publications</p>
+              </div>
 
-          <div className="lg:col-span-7 order-1 lg:order-2">
-            <Reveal delay={0.1} y={26}>
-              <PlaceholderImage
-                seed="engineering-lab"
-                tone="technical"
-                aspect="16/11"
-                frame="LAB.02"
-                label="Experimental mechanics"
-                className="w-full"
-              />
+              {/* Featured paper */}
+              <article className="grid grid-cols-1 md:grid-cols-[6rem_1fr] gap-x-6 gap-y-2 mt-6">
+                <span className="text-index pt-1">Featured</span>
+                <div>
+                  <p className="text-caption">
+                    {group.featured.journal ?? "—"}
+                    {group.featured.year ? ` · ${group.featured.year}` : ""} · {group.featured.type}
+                  </p>
+                  <p className="text-base font-medium leading-snug mt-1 max-w-2xl">{group.featured.title}</p>
+                  <p className="text-sm text-muted mt-1">{group.featured.authors.join(", ")}</p>
+                  {group.featured.url && (
+                    <a
+                      href={group.featured.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block text-caption text-accent underline underline-offset-2 mt-2"
+                    >
+                      {group.featured.doi ? `doi.org/${group.featured.doi}` : "View source"}
+                    </a>
+                  )}
+                </div>
+              </article>
+
+              {/* Compact rows */}
+              {group.compact.length > 0 && (
+                <ul className="mt-6 divide-y divide-line">
+                  {group.compact.map((p) => (
+                    <li key={p.id} className="grid grid-cols-1 md:grid-cols-[6rem_1fr] gap-x-6 gap-y-1 py-3">
+                      <span className={cx("text-caption pt-0.5")}>{p.year ?? "—"}</span>
+                      <div>
+                        <p className="text-sm text-charcoal leading-snug">{p.title}</p>
+                        <p className="text-caption mt-0.5">{p.journal ?? "—"}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </Reveal>
-          </div>
+          ))}
         </div>
+
+        <Reveal delay={0.15}>
+          <div className="flex flex-wrap gap-x-10 gap-y-3 mt-14 border-t border-line pt-8">
+            <Link href="/publications" className="inline-flex items-center gap-2 text-eyebrow text-accent group">
+              All 42 publications
+              <span className="transition-transform group-hover:translate-x-1">›</span>
+            </Link>
+            <Link href="/research" className="inline-flex items-center gap-2 text-eyebrow text-accent group">
+              Research themes
+              <span className="transition-transform group-hover:translate-x-1">›</span>
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
