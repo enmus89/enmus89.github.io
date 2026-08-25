@@ -68,7 +68,9 @@ export default function EngineeringSection() {
 
               {/* Featured paper */}
               <article className="grid grid-cols-1 md:grid-cols-[6rem_1fr] gap-x-6 gap-y-2 mt-6">
-                <span className="text-index pt-1">Featured</span>
+                <span className="inline-flex h-fit items-center rounded-full bg-blue-tint text-blue-strong text-xs font-medium px-2.5 py-1 w-fit">
+                  Featured
+                </span>
                 <div>
                   <p className="text-caption">
                     {group.featured.journal ?? "—"}

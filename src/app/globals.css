@@ -26,6 +26,12 @@
   --accent: #0071e3;        /* system blue */
   --accent-ink: #ffffff;    /* text on accent fill */
 
+  /* blue ramp — chart fills, meter tracks, tinted panels; one hue, light→dark */
+  --blue-tint: #eef5fd;     /* panel wash behind metrics/charts */
+  --blue-track: #d3e6fb;    /* unfilled meter track */
+  --blue-mid: #4a9bec;      /* secondary bar shade */
+  --blue-strong: #0058b0;   /* emphasis text on light surfaces */
+
   /* materials */
   --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-border: rgba(255, 255, 255, 0.4);
@@ -64,6 +70,11 @@
     --accent: #2997ff;
     --accent-ink: #ffffff;
 
+    --blue-tint: #0d1b2e;
+    --blue-track: #17324f;
+    --blue-mid: #5aa8f2;
+    --blue-strong: #7cc0ff;
+
     --glass-bg: rgba(29, 29, 31, 0.72);
     --glass-border: rgba(255, 255, 255, 0.08);
 
@@ -83,6 +94,10 @@
   --color-surface: var(--surface);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
+  --color-blue-tint: var(--blue-tint);
+  --color-blue-track: var(--blue-track);
+  --color-blue-mid: var(--blue-mid);
+  --color-blue-strong: var(--blue-strong);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }

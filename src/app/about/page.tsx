@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import Reveal from "@/components/Reveal";
+import MetricsCharts from "@/components/MetricsCharts";
 import {
   metrics,
   updates,
@@ -74,7 +75,10 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 sm:grid-cols-5 border-t border-line">
               {metrics.map((m) => (
                 <div key={m.label} className="py-6 pr-4 border-b border-line sm:border-r sm:last:border-r-0">
-                  <p className="text-display-2" style={{ fontSize: "clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem)" }}>
+                  <p
+                    className="text-display-2 text-blue-strong"
+                    style={{ fontSize: "clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem)" }}
+                  >
                     {m.value}
                   </p>
                   <p className="text-caption mt-1">{m.label}</p>
@@ -85,6 +89,7 @@ export default function AboutPage() {
               Google Scholar, as of Aug. 2026 — figures drift; see the linked profile for current numbers.
             </p>
           </Reveal>
+          <MetricsCharts />
         </div>
       </section>
 
