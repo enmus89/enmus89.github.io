@@ -58,7 +58,6 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                   <dd className="text-right">{project.area}</dd>
                 </div>
               </dl>
-              <PlaceholderStamp className="mt-6" />
             </Reveal>
           </div>
         </div>
@@ -104,7 +103,10 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       <section className="mt-20 md:mt-28 mb-32 md:mb-44">
         <div className="container-editorial">
           <Reveal>
-            <p className="text-eyebrow text-muted mb-6">Documentation</p>
+            <div className="flex items-center gap-4 mb-6">
+              <p className="text-eyebrow text-muted">Documentation</p>
+              <PlaceholderStamp />
+            </div>
           </Reveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {Array.from({ length: project.images }, (_, i) => (

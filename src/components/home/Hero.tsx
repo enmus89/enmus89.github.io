@@ -57,8 +57,8 @@ export default function Hero() {
                   <span className="text-caption hidden sm:inline text-right">
                     {e.descriptor}
                   </span>
-                  <span className="text-eyebrow shrink-0 transition-transform group-hover:translate-x-1">
-                    →
+                  <span className="text-eyebrow text-accent shrink-0 transition-transform group-hover:translate-x-1">
+                    ›
                   </span>
                 </Link>
               ))}

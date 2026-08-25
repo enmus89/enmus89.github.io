@@ -38,7 +38,7 @@ export type Publication = {
   doi?: string;
   abstract?: string;
   category: string;
-  type: "Journal Article" | "Conference Paper" | "Book Chapter" | "Thesis";
+  type: "Journal Article" | "Conference Paper" | "Book Chapter" | "Book" | "Thesis";
   url?: string;
   placeholder: true;
 };

@@ -23,9 +23,9 @@ export default function TeachingSection() {
             />
           </Reveal>
           <Reveal delay={0.08}>
-            <Link href="/teaching" className="inline-flex items-center gap-2 text-eyebrow group shrink-0">
+            <Link href="/teaching" className="inline-flex items-center gap-2 text-eyebrow text-accent group shrink-0">
               Teaching &amp; supervision
-              <span className="transition-transform group-hover:translate-x-1">→</span>
+              <span className="transition-transform group-hover:translate-x-1">›</span>
             </Link>
           </Reveal>
         </div>

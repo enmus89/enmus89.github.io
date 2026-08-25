@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { publications, publicationCategories, publicationTypes } from "@/data/publications";
-import PlaceholderStamp from "./PlaceholderStamp";
 import { cx } from "@/lib/utils";
 
 export default function PublicationsList() {
@@ -32,7 +31,7 @@ export default function PublicationsList() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Title, author, journal…"
-            className="mt-2 w-full border-b border-line-strong bg-transparent py-2 text-base focus:outline-none focus:border-ink"
+            className="mt-2 w-full border-b border-line-strong bg-transparent py-2 text-base focus:outline-none focus:border-accent"
           />
         </label>
 
@@ -46,9 +45,9 @@ export default function PublicationsList() {
                   type="button"
                   onClick={() => setCategory(c)}
                   className={cx(
-                    "text-xs px-2.5 py-1 border transition-colors",
+                    "text-xs px-3 py-1.5 rounded-full border transition-colors",
                     category === c
-                      ? "bg-ink text-paper border-ink"
+                      ? "bg-accent text-accent-ink border-accent"
                       : "border-line-strong text-charcoal hover:border-ink"
                   )}
                 >
@@ -67,9 +66,9 @@ export default function PublicationsList() {
                   type="button"
                   onClick={() => setType(t)}
                   className={cx(
-                    "text-xs px-2.5 py-1 border transition-colors",
+                    "text-xs px-3 py-1.5 rounded-full border transition-colors",
                     type === t
-                      ? "bg-ink text-paper border-ink"
+                      ? "bg-accent text-accent-ink border-accent"
                       : "border-line-strong text-charcoal hover:border-ink"
                   )}
                 >
@@ -94,7 +93,7 @@ export default function PublicationsList() {
                 type="button"
                 onClick={() => setOpenId(open ? null : p.id)}
                 aria-expanded={open}
-                className="w-full text-left grid grid-cols-1 sm:grid-cols-[3rem_1fr_auto] gap-x-4 gap-y-2 py-6 items-baseline"
+                className="w-full text-left grid grid-cols-1 sm:grid-cols-[3rem_1fr_auto] gap-x-4 gap-y-2 py-6 items-baseline rounded-[var(--radius-md)] transition-colors hover:bg-ink/[0.03] px-2 -mx-2"
               >
                 <span className="text-index">{String(i + 1).padStart(2, "0")}</span>
                 <div>
@@ -115,8 +114,18 @@ export default function PublicationsList() {
                     <p className="text-sm text-charcoal leading-relaxed max-w-2xl">{p.abstract}</p>
                   )}
                   <div className="flex items-center gap-4 mt-4">
-                    <PlaceholderStamp />
-                    <span className="text-caption">DOI — pending</span>
+                    {p.url ? (
+                      <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-caption text-accent underline underline-offset-2"
+                      >
+                        {p.doi ? `doi.org/${p.doi}` : "View source"}
+                      </a>
+                    ) : (
+                      <span className="text-caption text-muted">No DOI on record</span>
+                    )}
                   </div>
                 </div>
               )}

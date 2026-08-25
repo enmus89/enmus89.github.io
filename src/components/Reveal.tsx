@@ -30,6 +30,7 @@ export default function Reveal({ children, className, delay = 0, y = 18 }: Props
   return (
     <motion.div
       className={className}
+      data-reveal="1"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-10% 0px" }}

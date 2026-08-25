@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PlaceholderStamp from "@/components/PlaceholderStamp";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
@@ -8,10 +7,15 @@ export const metadata: Metadata = {
 };
 
 const links = [
-  { label: "Email", value: "Placeholder — professional email address" },
-  { label: "ORCID", value: "Placeholder" },
-  { label: "Google Scholar", value: "Placeholder" },
-  { label: "LinkedIn", value: "Placeholder" },
+  { label: "Email", value: "enea.mustafaraj@aum.edu.kw", href: "mailto:enea.mustafaraj@aum.edu.kw" },
+  { label: "ORCID", value: "orcid.org/0000-0002-1391-1626", href: "https://orcid.org/0000-0002-1391-1626" },
+  {
+    label: "Google Scholar",
+    value: "scholar.google.com",
+    href: "https://scholar.google.com/citations?user=64plbuYAAAAJ&hl=en",
+  },
+  { label: "ResearchGate", value: "researchgate.net", href: "https://www.researchgate.net/profile/Enea-Mustafaraj" },
+  { label: "LinkedIn", value: "linkedin.com/in/eneamustafaraj", href: "https://www.linkedin.com/in/eneamustafaraj/" },
 ];
 
 export default function ContactPage() {
@@ -28,7 +32,6 @@ export default function ContactPage() {
               For research collaboration, teaching enquiries or photography
               commissions.
             </p>
-            <PlaceholderStamp className="mt-6" />
           </Reveal>
         </div>
 
@@ -36,9 +39,18 @@ export default function ContactPage() {
           <Reveal delay={0.1}>
             <dl className="border-t border-line">
               {links.map((l) => (
-                <div key={l.label} className="flex justify-between py-4 border-b border-line">
-                  <dt className="text-eyebrow text-muted">{l.label}</dt>
-                  <dd className="text-sm text-charcoal">{l.value}</dd>
+                <div key={l.label} className="flex justify-between items-baseline gap-4 py-4 border-b border-line">
+                  <dt className="text-eyebrow text-muted shrink-0">{l.label}</dt>
+                  <dd className="text-sm text-right">
+                    <a
+                      href={l.href}
+                      target={l.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel={l.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                      className="text-charcoal hover:text-accent underline underline-offset-2 transition-colors break-all"
+                    >
+                      {l.value}
+                    </a>
+                  </dd>
                 </div>
               ))}
             </dl>

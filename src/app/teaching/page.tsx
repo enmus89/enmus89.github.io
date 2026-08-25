@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import PlaceholderImage from "@/components/PlaceholderImage";
-import PlaceholderStamp from "@/components/PlaceholderStamp";
 import Reveal from "@/components/Reveal";
-import { teachingEntries, teachingPhilosophy } from "@/data/teaching";
+import { teachingEntries, teachingOverview } from "@/data/teaching";
 
 export const metadata: Metadata = {
   title: "Teaching",
@@ -21,9 +20,8 @@ export default function TeachingPage() {
                 Teaching
               </h1>
               <p className="text-editorial-lead text-charcoal mt-8 max-w-xl">
-                {teachingPhilosophy}
+                {teachingOverview}
               </p>
-              <PlaceholderStamp className="mt-6" />
             </Reveal>
           </div>
         </div>

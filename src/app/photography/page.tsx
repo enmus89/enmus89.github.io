@@ -27,7 +27,7 @@ function ProjectCaption({
       </span>
       <span className="text-display-3 mt-1 inline-flex items-center gap-3" style={{ fontSize: "1.5rem" }}>
         {title}
-        <span className="text-base transition-transform group-hover:translate-x-1">→</span>
+        <span className="text-base text-accent transition-transform group-hover:translate-x-1">›</span>
       </span>
     </Link>
   );
@@ -95,9 +95,9 @@ export default function PhotographyPage() {
             <span className="text-eyebrow text-muted">{p5.category} · {p5.location}</span>
             <p className="text-display-3 mt-2" style={{ fontSize: "1.75rem" }}>{p5.title}</p>
             <p className="text-charcoal mt-4 leading-relaxed max-w-sm">{p5.description}</p>
-            <Link href={`/photography/${p5.slug}`} className="inline-flex items-center gap-2 text-eyebrow mt-6 group">
+            <Link href={`/photography/${p5.slug}`} className="inline-flex items-center gap-2 text-eyebrow text-accent mt-6 group">
               View the series
-              <span className="transition-transform group-hover:translate-x-1">→</span>
+              <span className="transition-transform group-hover:translate-x-1">›</span>
             </Link>
           </Reveal>
         </div>

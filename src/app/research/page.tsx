@@ -82,9 +82,9 @@ export default function ResearchPage() {
           </div>
 
           <Reveal delay={0.1}>
-            <Link href="/publications" className="inline-flex items-center gap-2 text-eyebrow mt-14 group">
+            <Link href="/publications" className="inline-flex items-center gap-2 text-eyebrow text-accent mt-14 group">
               Related publications
-              <span className="transition-transform group-hover:translate-x-1">→</span>
+              <span className="transition-transform group-hover:translate-x-1">›</span>
             </Link>
           </Reveal>
         </div>

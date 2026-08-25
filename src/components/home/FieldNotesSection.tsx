@@ -27,9 +27,9 @@ export default function FieldNotesSection() {
             />
           </Reveal>
           <Reveal delay={0.08}>
-            <Link href="/field-notes" className="inline-flex items-center gap-2 text-eyebrow group shrink-0">
+            <Link href="/field-notes" className="inline-flex items-center gap-2 text-eyebrow text-accent group shrink-0">
               All field notes
-              <span className="transition-transform group-hover:translate-x-1">→</span>
+              <span className="transition-transform group-hover:translate-x-1">›</span>
             </Link>
           </Reveal>
         </div>

@@ -1,9 +1,11 @@
 import type { ResearchTheme } from "./types";
 
 /**
- * Research themes. These are field/domain labels, not claims of specific
- * findings, awards, or affiliations — safe as structural placeholders
- * pending final copy from Enea.
+ * Research themes, aligned with Enea's real publication record, ORCID
+ * keywords and Google Scholar research areas (structural analysis,
+ * retrofitting, masonry, fibre-reinforced and sustainable materials,
+ * cultural heritage, statistical/DoE methods). Field/domain labels, not
+ * claims of specific findings, awards, or affiliations.
  */
 export const researchThemes: ResearchTheme[] = [
   {

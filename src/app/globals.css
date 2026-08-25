@@ -1,24 +1,75 @@
 @import "tailwindcss";
 
 /* ============================================================
-   DESIGN TOKENS
-   Restrained neutral palette. Photography supplies the color.
+   DESIGN TOKENS — Apple system-UI direction
+   System font stack, light/dark via prefers-color-scheme,
+   frosted-glass materials, continuous-radius cards, soft shadows,
+   system blue accent.
    ============================================================ */
 
 :root {
-  --paper: #f6f4ef;      /* warm off-white ground */
-  --paper-dim: #efece4;  /* recessed panels / alt sections */
-  --ink: #16150f;        /* near-black, warm */
-  --charcoal: #322f28;   /* secondary text */
-  --muted: #837c6d;      /* tertiary / captions / metadata */
-  --line: #d8d3c5;       /* hairlines, rules */
-  --line-strong: #b8b1a0;
-  --surface: #ffffff;
+  /* ground */
+  --paper: #f5f5f7;         /* page background (Apple's classic system gray) */
+  --paper-dim: #ffffff;     /* recessed / alternating sections */
+  --surface: #ffffff;       /* card / elevated surface */
 
-  --font-display: "Fraunces Variable", ui-serif, Georgia, "Times New Roman", serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* text */
+  --ink: #1d1d1f;           /* primary text */
+  --charcoal: #6e6e73;      /* secondary text */
+  --muted: #86868b;         /* tertiary / captions / metadata */
+
+  /* structure */
+  --line: #d2d2d7;          /* hairlines, separators */
+  --line-strong: #b8b8bc;
+
+  /* accent */
+  --accent: #0071e3;        /* system blue */
+  --accent-ink: #ffffff;    /* text on accent fill */
+
+  /* materials */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.4);
+
+  /* elevation */
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04), 0 20px 40px -16px rgba(0, 0, 0, 0.16);
+  --shadow-lift: 0 1px 3px rgba(0, 0, 0, 0.06), 0 30px 60px -20px rgba(0, 0, 0, 0.22);
+
+  /* radius */
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Inter Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-system);
+  --font-sans: var(--font-system);
 
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #000000;
+    --paper-dim: #1d1d1f;
+    --surface: #1d1d1f;
+
+    --ink: #f5f5f7;
+    --charcoal: #a1a1a6;
+    --muted: #86868b;
+
+    --line: #38383c;
+    --line-strong: #48484a;
+
+    --accent: #2997ff;
+    --accent-ink: #ffffff;
+
+    --glass-bg: rgba(29, 29, 31, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.08);
+
+    --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 20px 40px -16px rgba(0, 0, 0, 0.55);
+    --shadow-lift: 0 1px 3px rgba(0, 0, 0, 0.35), 0 30px 60px -20px rgba(0, 0, 0, 0.65);
+  }
 }
 
 @theme inline {
@@ -30,6 +81,8 @@
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -41,6 +94,7 @@
 html {
   background: var(--paper);
   scroll-behavior: smooth;
+  color-scheme: light dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -66,8 +120,8 @@ body {
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 a {
@@ -75,72 +129,74 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ============================================================
    TYPE SYSTEM
-   Fluid clamps keyed to the viewport. Fraunces for editorial
-   display type, Inter for navigation / body / metadata.
+   One system typeface throughout (SF Pro on Apple devices,
+   self-hosted Inter elsewhere). Bold, tight-tracked display
+   sizes; a plain, generously-leaded body/lead style.
    ============================================================ */
 
 .text-display-1 {
   font-family: var(--font-display);
-  font-weight: 380;
-  font-size: clamp(3rem, 2.1rem + 4.4vw, 8.5rem);
-  line-height: 0.96;
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  font-size: clamp(2.75rem, 1.95rem + 4vw, 7rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 
 .text-display-2 {
   font-family: var(--font-display);
-  font-weight: 380;
-  font-size: clamp(2.25rem, 1.7rem + 2.6vw, 4.75rem);
-  line-height: 1;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  font-size: clamp(2rem, 1.5rem + 2.3vw, 3.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
 }
 
 .text-display-3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.75rem, 1.45rem + 1.4vw, 2.9rem);
-  line-height: 1.08;
-  letter-spacing: -0.005em;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
 }
 
 .text-editorial-lead {
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 380;
-  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.9rem);
-  line-height: 1.35;
-  letter-spacing: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 0.98rem + 0.6vw, 1.5rem);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  color: var(--charcoal);
 }
 
 .text-eyebrow {
   font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-weight: 590;
+  font-size: 0.8125rem;
+  letter-spacing: -0.005em;
+  text-transform: none;
 }
 
 .text-caption {
   font-family: var(--font-sans);
   font-weight: 400;
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
+  font-size: 0.8125rem;
+  letter-spacing: 0;
   color: var(--muted);
 }
 
-/* Numbered index marks (01, 02...) used throughout as a quiet
-   structural device instead of icons or card chrome. */
+/* Numbered index marks — quieter under the system-UI treatment. */
 .text-index {
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 590;
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   color: var(--muted);
 }
@@ -161,8 +217,8 @@ a {
 /* Fine technical grid used behind engineering placeholder art */
 .grid-technical {
   background-image:
-    linear-gradient(to right, rgba(22, 21, 15, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(22, 21, 15, 0.07) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -172,4 +228,89 @@ a {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ============================================================
+   APPLE SYSTEM-UI PRIMITIVES
+   ============================================================ */
+
+/* Frosted-glass bar (nav, sheets). */
+.glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Dark frosted chip — for badges sitting on photographic/dark grounds,
+   regardless of page theme (mirrors iOS's dark in-photo badges). */
+.glass-dark {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+}
+
+/* Elevated card surface — continuous-radius corner, soft shadow. */
+.surface-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Pill button, filled with the system accent. */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-sans);
+  font-weight: 590;
+  font-size: 0.9375rem;
+  letter-spacing: -0.005em;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 0.6rem 1.25rem;
+  transition: opacity 0.2s var(--ease-spring), transform 0.2s var(--ease-spring);
+}
+.btn-pill:hover {
+  opacity: 0.85;
+}
+.btn-pill:active {
+  transform: scale(0.97);
+}
+
+/* Ghost pill — outline only, used on dark/photographic grounds. */
+.btn-pill-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-sans);
+  font-weight: 590;
+  font-size: 0.9375rem;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  transition: background 0.2s var(--ease-spring), border-color 0.2s var(--ease-spring);
+}
+.btn-pill-ghost:hover {
+  background: var(--paper-dim);
+  border-color: var(--muted);
+}
+
+/* Apple-style "Learn more ›" chevron link. */
+.link-chevron {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  color: var(--accent);
+  font-weight: 590;
+}
+.link-chevron .chev {
+  transition: transform 0.2s var(--ease-spring);
+  display: inline-block;
+}
+.link-chevron:hover .chev {
+  transform: translateX(3px);
 }

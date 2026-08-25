@@ -29,13 +29,14 @@ export default function AboutTeaser() {
               who looks for the moment before it.
             </p>
             <p className="text-charcoal mt-6 max-w-lg leading-relaxed">
-              Placeholder introduction. Replace with a short, human paragraph
-              on background, position and outlook — the fuller professional
-              record follows on the About page.
+              Associate Professor of Civil Engineering at the American
+              University of the Middle East, Kuwait, working on the
+              structural assessment, retrofitting and material performance
+              of masonry and concrete construction.
             </p>
-            <Link href="/about" className="inline-flex items-center gap-2 text-eyebrow mt-8 group">
+            <Link href="/about" className="inline-flex items-center gap-2 text-eyebrow text-accent mt-8 group">
               More about Enea
-              <span className="transition-transform group-hover:translate-x-1">→</span>
+              <span className="transition-transform group-hover:translate-x-1">›</span>
             </Link>
           </Reveal>
         </div>

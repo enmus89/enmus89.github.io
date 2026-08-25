@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/fraunces/full.css";
-import "@fontsource-variable/fraunces/full-italic.css";
 import "@fontsource-variable/inter/wght.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";

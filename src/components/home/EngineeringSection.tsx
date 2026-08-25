@@ -38,10 +38,10 @@ export default function EngineeringSection() {
               </ol>
               <Link
                 href="/research"
-                className="inline-flex items-center gap-2 text-eyebrow mt-8 group"
+                className="inline-flex items-center gap-2 text-eyebrow text-accent mt-8 group"
               >
                 All research themes
-                <span className="transition-transform group-hover:translate-x-1">→</span>
+                <span className="transition-transform group-hover:translate-x-1">›</span>
               </Link>
             </Reveal>
           </div>

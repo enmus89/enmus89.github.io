@@ -32,8 +32,8 @@ export default function SelectedWorkSection() {
               <p className="text-display-3 mt-1" style={{ fontSize: "1.6rem" }}>
                 {project.title}
               </p>
-              <span className="inline-flex items-center gap-2 text-eyebrow mt-4 group-hover:gap-3 transition-all">
-                Read the project →
+              <span className="inline-flex items-center gap-2 text-eyebrow text-accent mt-4 group-hover:gap-3 transition-all">
+                Read the project ›
               </span>
             </Link>
           </Reveal>
@@ -52,8 +52,8 @@ export default function SelectedWorkSection() {
               <p className="text-display-3 mt-1" style={{ fontSize: "1.6rem" }}>
                 {photo.title}
               </p>
-              <span className="inline-flex items-center gap-2 text-eyebrow mt-4 group-hover:gap-3 transition-all">
-                View the series →
+              <span className="inline-flex items-center gap-2 text-eyebrow text-accent mt-4 group-hover:gap-3 transition-all">
+                View the series ›
               </span>
             </Link>
           </Reveal>

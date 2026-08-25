@@ -12,17 +12,14 @@ type Props = {
 /**
  * Considered placeholder art standing in for real photography.
  *
- * "photograph" tone: a warm, borderless duotone field with a soft
- * vignette and a contact-sheet frame number — reads as an image that
- * bleeds off the edge, the way a photograph does.
+ * "photograph" tone: a cool, borderless duotone field with a soft
+ * vignette — reads as a product-style studio render.
  *
- * "technical" tone: a bold-lined blueprint grid inside a drawn ink
- * border with registration crosshairs — reads as a plate from a
- * drawing set, not a photograph.
+ * "technical" tone: a pale systemGray6 card with a faint grid — reads
+ * as engineering documentation without borrowing photographic imagery.
  *
- * This is intentionally not a gray box with an icon — the placeholder
- * itself carries the site's visual register (and the engineering /
- * photography distinction) until real images land.
+ * Both sit on a continuous-radius card with a soft floating shadow —
+ * this is intentionally not a gray box with an icon.
  */
 export default function PlaceholderImage({
   seed,
@@ -35,19 +32,17 @@ export default function PlaceholderImage({
   const rand = seededRandom(seed);
   const angle = Math.round(rand() * 360);
   const spread = 55 + Math.round(rand() * 25);
-  const warmth = rand() > 0.55;
+  const cool = rand() > 0.55;
   const isTechnical = tone === "technical";
 
-  const stopA = isTechnical ? "#e4e0d2" : warmth ? "#332d22" : "#211f1a";
-  const stopB = isTechnical ? "#f4f2ea" : warmth ? "#a3854f" : "#4c493f";
+  const stopA = isTechnical ? "#eef0f2" : cool ? "#1c2128" : "#2a2c30";
+  const stopB = isTechnical ? "#fbfbfd" : cool ? "#5c6b7a" : "#6e6e73";
 
   const uid = `ph-${seed.replace(/[^a-z0-9]/gi, "")}`;
 
   return (
     <div
-      className={`relative overflow-hidden bg-paper-dim ${
-        isTechnical ? "border-[1.5px] border-ink/70" : ""
-      } ${className}`}
+      className={`relative overflow-hidden bg-paper-dim rounded-[var(--radius-lg)] shadow-[var(--shadow-soft)] ${className}`}
       style={{ aspectRatio: aspect }}
     >
       <svg
@@ -67,49 +62,28 @@ export default function PlaceholderImage({
               <path
                 d="M 25 0 L 0 0 0 25"
                 fill="none"
-                stroke="#16150f"
-                strokeOpacity={0.28}
+                stroke="#1d1d1f"
+                strokeOpacity={0.08}
                 strokeWidth="1"
               />
             </pattern>
           )}
           {!isTechnical && (
-            <radialGradient id={`${uid}-vignette`} cx="50%" cy="42%" r="75%">
-              <stop offset="55%" stopColor="#000000" stopOpacity="0" />
-              <stop offset="100%" stopColor="#000000" stopOpacity="0.32" />
+            <radialGradient id={`${uid}-vignette`} cx="50%" cy="40%" r="78%">
+              <stop offset="50%" stopColor="#000000" stopOpacity="0" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0.28" />
             </radialGradient>
           )}
         </defs>
         <rect width="400" height="500" fill={`url(#${uid})`} />
         {isTechnical && <rect width="400" height="500" fill={`url(#${uid}-grid)`} />}
-        {isTechnical && (
-          <rect
-            x="8"
-            y="8"
-            width="384"
-            height="484"
-            fill="none"
-            stroke="#16150f"
-            strokeOpacity="0.35"
-            strokeWidth="1"
-          />
-        )}
         {!isTechnical && <rect width="400" height="500" fill={`url(#${uid}-vignette)`} />}
       </svg>
 
-      {isTechnical && (
-        <>
-          <span className="absolute top-2.5 left-2.5 w-3.5 h-3.5 border-t-2 border-l-2 border-ink/55" />
-          <span className="absolute top-2.5 right-2.5 w-3.5 h-3.5 border-t-2 border-r-2 border-ink/55" />
-          <span className="absolute bottom-2.5 left-2.5 w-3.5 h-3.5 border-b-2 border-l-2 border-ink/55" />
-          <span className="absolute bottom-2.5 right-2.5 w-3.5 h-3.5 border-b-2 border-r-2 border-ink/55" />
-        </>
-      )}
-
       {frame && (
         <span
-          className={`absolute top-3 right-3 text-index ${
-            isTechnical ? "text-ink/60" : "text-paper/75"
+          className={`absolute top-3 right-3 rounded-full px-2 py-0.5 text-[0.6875rem] font-medium tabular-nums ${
+            isTechnical ? "bg-ink/[0.06] text-ink/70" : "glass-dark text-white/90"
           }`}
         >
           {frame}
@@ -118,8 +92,8 @@ export default function PlaceholderImage({
 
       {label && (
         <span
-          className={`absolute bottom-3 left-3 text-eyebrow ${
-            isTechnical ? "text-ink/65" : "text-paper/85"
+          className={`absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-[0.6875rem] font-medium ${
+            isTechnical ? "bg-ink/[0.06] text-ink/70" : "glass-dark text-white/90"
           }`}
         >
           {label}

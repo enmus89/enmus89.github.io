@@ -54,9 +54,9 @@ export default function PhotographySection() {
       </div>
 
       <Reveal delay={0.05} className="container-editorial mt-10">
-        <Link href="/photography" className="inline-flex items-center gap-2 text-eyebrow group">
+        <Link href="/photography" className="inline-flex items-center gap-2 text-eyebrow text-accent group">
           View the photography
-          <span className="transition-transform group-hover:translate-x-1">→</span>
+          <span className="transition-transform group-hover:translate-x-1">›</span>
         </Link>
       </Reveal>
     </section>
