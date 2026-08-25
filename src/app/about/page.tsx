@@ -1,43 +1,23 @@
 import type { Metadata } from "next";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import Reveal from "@/components/Reveal";
+import {
+  metrics,
+  updates,
+  education,
+  experience,
+  serviceCommittees,
+  servicePeerReview,
+  supervision,
+} from "@/data/profile";
 
 export const metadata: Metadata = {
   title: "About",
   description: "Civil engineer, researcher, educator and photographer.",
 };
 
-/**
- * Sourced from Enea's CV (Sept. 2025), ORCID (0000-0002-1391-1626) and
- * Google Scholar, as of Aug. 2026. Citation figures are live and will
- * drift — see the linked profiles for current numbers.
- */
-const record = [
-  {
-    heading: "Academic Position",
-    body: "Associate Professor of Civil Engineering, American University of the Middle East (AUM), Kuwait — since October 2025. Previously Assistant Professor at AUM (Feb. 2022–Sept. 2025), and Lecturer at Epoka University, Tirana, Albania (Sept. 2012–Jan. 2022).",
-  },
-  {
-    heading: "Education",
-    body: "PhD in Civil Engineering, Epoka University (2013–2016) — dissertation: \"External Shear Strengthening of Unreinforced Damaged Masonry Walls.\" MSc in Civil Engineering (Structural Engineering), Epoka University (2011–2012). BSc in Civil Engineering, Epoka University (2007–2011).",
-  },
-  {
-    heading: "Research Interests",
-    body: "Structural analysis and assessment, retrofitting of damaged structures, finite element modelling, unreinforced masonry and historical structures, cultural heritage preservation, fibre-reinforced and sustainable construction materials.",
-  },
-  {
-    heading: "Professional Activities",
-    body: "Member of the Local Organizing Committee, 2nd–4th International Balkans Conference on Challenges of Civil Engineering (2013, 2016, 2020) and International Students' Conference of Civil Engineering (2012). Supervised more than 43 undergraduate and 13 graduate student research projects.",
-  },
-  {
-    heading: "Peer Review",
-    body: "Reviewer for Buildings, Construction and Building Materials, Journal of Materials in Civil Engineering, Journal of Engineering Sciences (King Saud University), Processes, and Structures (27 reviews recorded on ORCID as of Aug. 2026).",
-  },
-  {
-    heading: "Citation Record",
-    body: "670 citations, h-index 13, i10-index 18 (all-time, per Google Scholar as of Aug. 2026) — see the linked profile for current figures.",
-  },
-];
+const researchInterests =
+  "Structural analysis and assessment, retrofitting of damaged structures, finite element modelling, unreinforced masonry and historical structures, cultural heritage preservation, fibre-reinforced and sustainable construction materials.";
 
 const profileLinks = [
   { label: "ORCID", href: "https://orcid.org/0000-0002-1391-1626" },
@@ -49,6 +29,7 @@ const profileLinks = [
 export default function AboutPage() {
   return (
     <>
+      {/* ---------- Hero / bio ---------- */}
       <section className="pt-28 md:pt-36">
         <div className="container-editorial grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
           <div className="lg:col-span-5">
@@ -80,24 +61,126 @@ export default function AboutPage() {
                 Alongside the research record below, he photographs the
                 structures and places that record intersects with.
               </p>
+              <p className="text-charcoal mt-5 leading-relaxed max-w-lg">{researchInterests}</p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="mt-24 md:mt-32 mb-32 md:mb-44">
+      {/* ---------- Metrics snapshot ---------- */}
+      <section className="mt-20 md:mt-28">
         <div className="container-editorial">
+          <Reveal>
+            <div className="grid grid-cols-2 sm:grid-cols-5 border-t border-line">
+              {metrics.map((m) => (
+                <div key={m.label} className="py-6 pr-4 border-b border-line sm:border-r sm:last:border-r-0">
+                  <p className="text-display-2" style={{ fontSize: "clamp(1.75rem, 1.4rem + 1.5vw, 2.75rem)" }}>
+                    {m.value}
+                  </p>
+                  <p className="text-caption mt-1">{m.label}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-caption mt-3">
+              Google Scholar, as of Aug. 2026 — figures drift; see the linked profile for current numbers.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---------- Updates ---------- */}
+      <section className="mt-20 md:mt-28">
+        <div className="container-editorial">
+          <Reveal>
+            <p className="text-eyebrow text-muted mb-6">Updates</p>
+          </Reveal>
+          <ol className="border-t border-line">
+            {updates.map((u, i) => (
+              <li key={i}>
+                <Reveal delay={Math.min(i * 0.04, 0.2)}>
+                  <div className="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-8 gap-y-1 py-6 border-b border-line">
+                    <p className="text-caption">{u.date}</p>
+                    <p className="text-charcoal max-w-2xl leading-relaxed">{u.body}</p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ---------- Education ---------- */}
+      <section className="mt-20 md:mt-28">
+        <div className="container-editorial">
+          <Reveal>
+            <p className="text-eyebrow text-muted mb-6">Education</p>
+          </Reveal>
+          <ol className="border-t border-line">
+            {education.map((e, i) => (
+              <li key={i}>
+                <Reveal delay={Math.min(i * 0.04, 0.2)}>
+                  <div className="grid grid-cols-1 sm:grid-cols-[10rem_1fr_8rem] gap-x-8 gap-y-1 py-6 border-b border-line items-baseline">
+                    <p className="text-caption">{e.period}</p>
+                    <div>
+                      <p className="text-charcoal font-medium">{e.degree}</p>
+                      <p className="text-sm text-muted mt-0.5">{e.institution}</p>
+                      {e.detail && <p className="text-sm text-charcoal mt-2 max-w-lg leading-relaxed">{e.detail}</p>}
+                    </div>
+                    {e.gpa && <p className="text-sm text-muted sm:text-right">{e.gpa}</p>}
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ---------- Experience ---------- */}
+      <section className="mt-20 md:mt-28">
+        <div className="container-editorial">
+          <Reveal>
+            <p className="text-eyebrow text-muted mb-6">Experience</p>
+          </Reveal>
+          <ol className="border-t border-line">
+            {experience.map((e, i) => (
+              <li key={i}>
+                <Reveal delay={Math.min(i * 0.04, 0.2)}>
+                  <div className="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-8 gap-y-1 py-6 border-b border-line">
+                    <p className="text-caption">{e.period}</p>
+                    <div>
+                      <p className="text-charcoal font-medium">{e.role}</p>
+                      <p className="text-sm text-muted mt-0.5">{e.institution}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ---------- Service ---------- */}
+      <section className="mt-20 md:mt-28 mb-32 md:mb-44">
+        <div className="container-editorial">
+          <Reveal>
+            <p className="text-eyebrow text-muted mb-6">Academic Service</p>
+          </Reveal>
           <dl className="border-t border-line">
-            {record.map((r) => (
-              <div
-                key={r.heading}
-                className="grid grid-cols-1 sm:grid-cols-[16rem_1fr] gap-x-8 gap-y-2 py-7 border-b border-line"
-              >
-                <dt className="text-eyebrow text-muted">{r.heading}</dt>
-                <dd className="text-charcoal max-w-2xl leading-relaxed">{r.body}</dd>
+            <div className="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-8 gap-y-2 py-6 border-b border-line">
+              <dt className="text-charcoal font-medium">{servicePeerReview.role}</dt>
+              <dd className="text-sm text-charcoal max-w-2xl leading-relaxed">{servicePeerReview.detail}</dd>
+            </div>
+            {serviceCommittees.map((s, i) => (
+              <div key={i} className="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-8 gap-y-2 py-6 border-b border-line">
+                <dt className="text-charcoal font-medium">{s.role}</dt>
+                <dd className="text-sm text-charcoal max-w-2xl leading-relaxed">{s.detail}</dd>
               </div>
             ))}
-            <div className="grid grid-cols-1 sm:grid-cols-[16rem_1fr] gap-x-8 gap-y-2 py-7 border-b border-line">
+            <div className="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-8 gap-y-2 py-6 border-b border-line">
+              <dt className="text-charcoal font-medium">Supervision</dt>
+              <dd className="text-sm text-charcoal max-w-2xl leading-relaxed">{supervision}</dd>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-[10rem_1fr] gap-x-8 gap-y-2 py-7 border-b border-line">
               <dt className="text-eyebrow text-muted">Profile Links</dt>
               <dd className="flex flex-wrap gap-x-6 gap-y-2">
                 {profileLinks.map((l) => (
