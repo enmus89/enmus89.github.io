@@ -1,4 +1,5 @@
 import { seededRandom } from "@/lib/utils";
+import { mediaOverrides } from "@/data/media";
 
 type Props = {
   seed: string;
@@ -7,6 +8,7 @@ type Props = {
   frame?: string;
   aspect?: string;
   className?: string;
+  alt?: string;
 };
 
 /**
@@ -28,7 +30,40 @@ export default function PlaceholderImage({
   frame,
   aspect = "4/5",
   className = "",
+  alt,
 }: Props) {
+  const realSrc = mediaOverrides[seed];
+
+  if (realSrc) {
+    return (
+      <div
+        className={`relative overflow-hidden bg-paper-dim rounded-[var(--radius-lg)] shadow-[var(--shadow-soft)] ${className}`}
+        style={{ aspectRatio: aspect }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element -- static export, arbitrary aspect ratios, no build-time optimizer needed */}
+        <img src={realSrc} alt={alt ?? label ?? ""} className="absolute inset-0 h-full w-full object-cover" />
+        {frame && (
+          <span
+            className={`absolute top-3 right-3 rounded-full px-2 py-0.5 text-[0.6875rem] font-medium tabular-nums ${
+              tone === "technical" ? "bg-ink/[0.06] text-ink/70" : "glass-dark text-white/90"
+            }`}
+          >
+            {frame}
+          </span>
+        )}
+        {label && (
+          <span
+            className={`absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-[0.6875rem] font-medium ${
+              tone === "technical" ? "bg-ink/[0.06] text-ink/70" : "glass-dark text-white/90"
+            }`}
+          >
+            {label}
+          </span>
+        )}
+      </div>
+    );
+  }
+
   const rand = seededRandom(seed);
   const angle = Math.round(rand() * 360);
   const spread = 55 + Math.round(rand() * 25);
